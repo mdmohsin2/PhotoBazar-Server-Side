@@ -22,10 +22,12 @@ async function run() {
         const serviceCollection = client.db('assignment11').collection('services');
 
         app.get('/services', async (req, res) => {
+            const size = parseInt(req.query.size)
             const query = {};
             const cursor = serviceCollection.find(query);
-            const services = await cursor.toArray();
-            res.send(services)
+            const services = await cursor.limit(size).toArray();
+            const count = await serviceCollection.estimatedDocumentCount()
+            res.send({services, count})
         });
 
 
