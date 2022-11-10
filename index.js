@@ -79,12 +79,6 @@ async function run() {
             res.send(users);
         })
 
-        // app.get('/singleReview', async (req, res) => {
-        //     let query = {service};
-        //     const cursor = reviewCollection.find(query);
-        //     const users = await cursor.toArray();
-        //     res.send(users);
-        // })
 
 
         app.get('/singleReview', async (req, res) => {
@@ -97,6 +91,20 @@ async function run() {
             const cursor = reviewCollection.find(query);
             const users = await cursor.toArray();
             res.send(users);
+        });
+
+        app.delete('/singleReview/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await reviewCollection.deleteOne(query);
+            res.send(result);
+        })
+
+        app.get('review/:id', async(req,res)=> {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await reviewCollection.findOne(query);
+            res.send(result);
         })
 
 
