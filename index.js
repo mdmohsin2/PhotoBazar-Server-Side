@@ -68,7 +68,33 @@ async function run() {
         })
 
         app.get('/review', async (req, res) => {
-            const cursor = reviewCollection.find({});
+            let query = {};
+            if (req.query.email) {
+                query = {
+                    email: req.query.email
+                }
+            }
+            const cursor = reviewCollection.find(query);
+            const users = await cursor.toArray();
+            res.send(users);
+        })
+
+        // app.get('/singleReview', async (req, res) => {
+        //     let query = {service};
+        //     const cursor = reviewCollection.find(query);
+        //     const users = await cursor.toArray();
+        //     res.send(users);
+        // })
+
+
+        app.get('/singleReview', async (req, res) => {
+            let query = {};
+            if (req.query.review) {
+                query = {
+                    review: req.query.review
+                }
+            }
+            const cursor = reviewCollection.find(query);
             const users = await cursor.toArray();
             res.send(users);
         })
