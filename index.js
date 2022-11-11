@@ -103,10 +103,24 @@ async function run() {
             res.send(user)
         })
 
+        app.put('/singleReview/:id', async(req,res)=>{
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)}
+            const user = req.body;
+            const option = {upsert: true};
+            const updatedUser = {
+                $set: {
+                    message: user.message,
+                }
+            }
+            const result= await reviewCollection.updateOne(filter, updatedUser, option);
+            res.send(result)
+        })
 
 
 
 
+        // review delete
         app.delete('/singleReview/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -115,19 +129,6 @@ async function run() {
         })
 
 
-        // app.put('/singleReview/:id', async(req,res)=>{
-        //     const id = req.params.id;
-        //     const filter = {_id: ObjectId(id)}
-        //     const user = req.body;
-        //     const option = {upsert: true};
-        //     const updatedUser = {
-        //         $set: {
-        //             message: user.name,
-        //         }
-        //     }
-        //     const result= await userCollection.updateOne(filter, updatedUser, option);
-        //     res.send(result)
-        // })
 
 
 
