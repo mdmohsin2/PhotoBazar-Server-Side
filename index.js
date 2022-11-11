@@ -93,6 +93,20 @@ async function run() {
             res.send(users);
         });
 
+
+
+        // review button edit
+        app.get('/singleReview/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)}
+            const user = await reviewCollection.findOne(query)
+            res.send(user)
+        })
+
+
+
+
+
         app.delete('/singleReview/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -100,12 +114,20 @@ async function run() {
             res.send(result);
         })
 
-        app.get('review/:id', async(req,res)=> {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await reviewCollection.findOne(query);
-            res.send(result);
-        })
+
+        // app.put('/singleReview/:id', async(req,res)=>{
+        //     const id = req.params.id;
+        //     const filter = {_id: ObjectId(id)}
+        //     const user = req.body;
+        //     const option = {upsert: true};
+        //     const updatedUser = {
+        //         $set: {
+        //             message: user.name,
+        //         }
+        //     }
+        //     const result= await userCollection.updateOne(filter, updatedUser, option);
+        //     res.send(result)
+        // })
 
 
 
